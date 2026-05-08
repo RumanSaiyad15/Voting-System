@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+
+{% block title %}Cast your vote • Voting System{% endblock %}
+
+{% block content %}
+  <section class="hero">
+    <div class="hero__copy">
+      <h1 class="h1">Cast your vote</h1>
+      <p class="subtle">
+        Enter your details and select a party. Your voter ID can vote only once.
+      </p>
+    </div>
+    <div class="hero__card">
+      <div class="badge">Tip</div>
+      <div class="hero__hint">
+        Your voter ID must be <strong>exactly 16 characters</strong>.
+      </div>
+    </div>
+  </section>
+
+  <section class="grid">
+    <div class="card">
+      <div class="card__header">
+        <h2 class="h2">Voter details</h2>
+        <p class="muted">All fields are required.</p>
+      </div>
+
+      <form class="form" action="{{ url_for('vote') }}" method="post">
+        <div class="field">
+          <label class="label" for="name">Name</label>
+          <input
+            class="input"
+            id="name"
+            name="name"
+            type="text"
+            placeholder="e.g. Ruman Saiyed"
+            autocomplete="name"
+            required
+          />
+        </div>
+
+        <div class="field">
+          <label class="label" for="voter_id">Voter ID (16 characters)</label>
+          <input
+            class="input"
+            id="voter_id"
+            name="voter_id"
+            type="text"
+            minlength="16"
+            maxlength="16"
+            placeholder="XXXXXXXXXXXXXXXX"
+            autocomplete="off"
+            required
+          />
+          <div class="help">We store voter IDs to prevent re-voting.</div>
+        </div>
+
+        <div class="field">
+          <div class="label">Select a party</div>
+          <div class="radio-grid">
+            {% for p in parties %}
+              <label class="radio">
+                <input class="radio__input" type="radio" name="choice" value="{{ loop.index }}" required />
+                <span class="radio__box"></span>
+                <span class="radio__text">{{ p }}</span>
+              </label>
+            {% endfor %}
+          </div>
+        </div>
+
+        <div class="actions">
+          <button class="btn btn--primary" type="submit">Submit vote</button>
+          <a class="btn btn--ghost" href="{{ url_for('results') }}">View results</a>
+        </div>
+      </form>
+    </div>
+
+    <div class="card">
+      <div class="card__header">
+        <h2 class="h2">How it works</h2>
+        <p class="muted">Quick notes about this demo app.</p>
+      </div>
+      <div class="stack stack--md">
+        <div class="list-item">
+          <div class="list-item__title">One vote per ID</div>
+          <div class="list-item__body">If an ID is already used, the app blocks another vote.</div>
+        </div>
+        <div class="list-item">
+          <div class="list-item__title">Simple storage</div>
+          <div class="list-item__body">Votes are appended to a local text file.</div>
+        </div>
+        <div class="list-item">
+          <div class="list-item__title">Optional results lock</div>
+          <div class="list-item__body">
+            Set <code>RESULTS_PIN</code> in your environment to lock the results page.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+{% endblock %}
+

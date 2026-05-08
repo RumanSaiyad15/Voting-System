@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block title %}Vote recorded • Voting System{% endblock %}
+
+{% block content %}
+  <section class="card card--success" style="margin-top: 20px;">
+    <div class="card__header">
+      <h1 class="h1">Vote recorded</h1>
+      <p class="subtle">Thanks, {{ name }}. Your vote has been saved.</p>
+    </div>
+
+    <div class="stack stack--md">
+      <div class="result-pill">
+        <div class="result-pill__label">Selected party</div>
+        <div class="result-pill__value">{{ party }}</div>
+      </div>
+
+      <div class="actions">
+        <a class="btn btn--primary" href="{{ url_for('index') }}">Back to voting</a>
+        <a class="btn btn--ghost" href="{{ url_for('results') }}">View results</a>
+      </div>
+    </div>
+  </section>
+{% endblock %}
+

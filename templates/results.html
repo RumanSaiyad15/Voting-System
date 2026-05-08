@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block title %}Results • Voting System{% endblock %}
+
+{% block content %}
+  <section class="card" style="margin-top: 20px;">
+    <div class="card__header">
+      <h1 class="h1">Results</h1>
+      <p class="subtle">Live tally from stored votes.</p>
+    </div>
+
+    <div class="results">
+      <div class="results__meta">
+        <div class="muted">Total votes</div>
+        <div class="kpi">{{ total }}</div>
+      </div>
+
+      <div class="table">
+        <div class="table__head">
+          <div>Party</div>
+          <div class="right">Votes</div>
+          <div class="right">Share</div>
+        </div>
+
+        {% for party, count in rows %}
+          {% set share = (0 if total == 0 else (count * 100 / total)) %}
+          <div class="table__row">
+            <div class="party">
+              <div class="party__dot" aria-hidden="true"></div>
+              <div class="party__name">{{ party }}</div>
+            </div>
+            <div class="right mono">{{ count }}</div>
+            <div class="right mono">{{ "%.1f"|format(share) }}%</div>
+            <div class="bar" aria-hidden="true">
+              <div class="bar__fill" style="width: {{ share }}%"></div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+
+      <div class="actions">
+        <a class="btn btn--primary" href="{{ url_for('index') }}">Back to voting</a>
+      </div>
+    </div>
+  </section>
+{% endblock %}
+
